@@ -2,8 +2,6 @@ const axios = require ('axios');
 const express = require('express');
 const bodyParser = require('body-parser');
 const { v4: uuidv4 } = require('uuid');
-const app = express();
-app.use(bodyParser.json());
 
 const observacoesPorLembreteId = {}
 
@@ -14,7 +12,7 @@ const funcoes = {
         const obsParaAtualizar = observacoes.find(o => o.id ===
             observacao.id)
         obsParaAtualizar.status = observacao.status;
-        axios.post('http://localhost:10000/eventos', {
+        axios.post('http://192.168.56.1:10000/eventos', {
             tipo: "ObservacaoAtualizada",
             dados: {
                 id: observacao.id,
@@ -26,7 +24,8 @@ const funcoes = {
     }
 }
 
-
+const app = express();
+app.use(bodyParser.json());
 
 app.post('/lembretes/:id/observacoes', async (req, res) => {
     const idObs = uuidv4();
@@ -36,7 +35,7 @@ app.post('/lembretes/:id/observacoes', async (req, res) => {
         observacoesPorLembreteId[req.params.id] || [];
     observacoesDoLembrete.push({id: idObs, texto, status: 'aguardadndo'});
     observacoesPorLembreteId[req.params.id] = observacoesDoLembrete;
-    await axios.post('http://localhost:10000/eventos', {
+    await axios.post('http://192.168.56.1:10000/eventos', {
         tipo: "ObservacaoCriada",
         dados: {
             id: idObs, texto, lembreteId: req.params.id, status: 'aguardando'
