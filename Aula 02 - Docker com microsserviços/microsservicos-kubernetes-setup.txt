@@ -1,0 +1,38 @@
+1 - criar os dockerfiles e buildar as imagens de todos os microsserviços, se já não estiverem buildadas
+	exemplo: docker build -t matheusgalbiati/lembretes .
+		(pra esse comando dar certo no arquivo lembretes-deployment.yaml o image tem que estar apenas matheusgalbiati/lembretes)
+
+2 - criar um diretorio na raiz do projeto: implantacao/kubernetes
+	dentro desse diretorio criar todos os arquivos .yaml
+
+3 - no diretorio de implantacao/kubernetes rodar o comando kubectl apply -f lembretes-deployment.yaml
+	rodar pra cada arquivo de microsserviço criado
+
+4 - para testar o deploy rodar kubectl get pods pra pegar o nome_do_pod e depois rodar kubectl logs nome_do_pod
+	tem que printar o console.log que ta definido nos arquivos index.js
+
+5 - logar no docker hub pelo terminal usando o comando docker login
+
+6 - subir todas as imagens docker para o docker hub
+	dentro de cada diretorio do microsserviço rodar docker push matheusgalbiati/lembretes
+
+7 - dentro de cada diretorio do microsserviço rodar: kubectl rollout restart deployment lembretes-deployment
+
+8 - checar os deployments, rodar: kubectl get deployments
+				  kubectl get pods
+				  kubectl logs nome_do_pod
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+CRIANDO OS SERVIÇOS PARA ACESSAR OS MICROSSERVIÇOS PELO KUBERNETES AO INVES DE USAR LOCALHOST
+
+9 - adicionar nos arquivos [microsserviço]-deployment.yaml um deploy do tipo Service (exemplo de codigo no github)
+
+10 - rodar o comando docker push para cada imagem que foi atualizada de cada microsserviço (docker push matheusgalbiati/lembretes)
+
+11 - mudar as URLs dos arquivos index.js dos microsserviços e do barramento (exemplo no github)
+
+12 - dentro do diretorio implantacao/kubernetes rodar o comando: kubectl rollout restart deployment lembretes-deployment [nome do arquivo]
+
+13 - rodar a requisição no postman/thunder e torcer pra tudo dar certo
+
+14 - seja feliz!!!
