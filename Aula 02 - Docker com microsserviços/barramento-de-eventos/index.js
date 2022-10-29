@@ -13,20 +13,20 @@ app.post('/eventos', (req, res) => {
     eventos.push(evento)
     try{
         //envia o evento para o microsserviço de lembretes
-        axios.post('http://192.168.56.1:4000/eventos', evento);
+        axios.post('http://lembretes-clusterip-service:4000/eventos', evento);
     } catch (err) {}
-    try{
-        //envia o evento para o microsserviço de obervações
-        axios.post('http://192.168.56.1:5000/eventos', evento);
-    } catch (err) {}
-    try{
-        //envia o evento para o microsserviço de consulta
-        axios.post("http://192.168.56.1:6000/eventos", evento);
-    } catch (err) {}
-    try{
-        //envia o evento para o microsservico de classificacao
-        axios.post("http://192.168.56.1:7000/eventos", evento);
-    } catch (err) {}
+    // try{
+    //     //envia o evento para o microsserviço de obervações
+    //     axios.post('http://192.168.56.1:5000/eventos', evento);
+    // } catch (err) {}
+    // try{
+    //     //envia o evento para o microsserviço de consulta
+    //     axios.post("http://192.168.56.1:6000/eventos", evento);
+    // } catch (err) {}
+    // try{
+    //     //envia o evento para o microsservico de classificacao
+    //     axios.post("http://192.168.56.1:7000/eventos", evento);
+    // } catch (err) {}
     res.status(200).send({ msg: "ok"});
 });
 
